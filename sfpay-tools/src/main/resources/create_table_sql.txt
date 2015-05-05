@@ -1,0 +1,108 @@
+create table DM_EWS.EWS_INDEX_DEF  (
+   WARN_INDEX_NO        VARCHAR2(50)                    not null,
+   WARN_INDEX_NAME      VARCHAR2(400)                   not null,
+   WARN_SOURCE          VARCHAR2(30)                    not null,
+   WARN_TYPE            VARCHAR2(10)                    not null,
+   WARN_PROPERTY        VARCHAR2(10)                    not null,
+   WARN_CYCLE           VARCHAR2(10)                    not null,
+   WARN_CYCLE_VAL       NUMBER                          not null,
+   WARN_RESULT_SOURCE   VARCHAR2(1)                    default 'A' not null,
+   WARN_LEVEL           VARCHAR2(4)                     not null,
+   IS_VALID             VARCHAR2(1)                    default 'Y' not null,
+   IS_MAIL_NOTIFY       VARCHAR2(1)                    default 'Y',
+   IS_SMS_NOTIFY        VARCHAR2(1)                    default 'N',
+   REMARK               VARCHAR2(400),
+   CREATE_ID            VARCHAR2(16),
+   CREATE_TIME          TIMESTAMP                      default SYSDATE,
+   UPDATE_ID            VARCHAR2(16),
+   UPDATE_TIME          TIMESTAMP,
+   WARN_INDEX_SQL       VARCHAR2(2000),
+   WARN_INDEX_MAIL_TEMPLATE VARCHAR2(2000),
+   constraint PK_EWS_INDEX_DEF primary key (WARN_INDEX_NO)
+         using index
+       pctfree 10
+       initrans 2
+       storage
+       (
+           initial 64K
+           next 1024K
+           minextents 1
+           maxextents unlimited
+       )
+       tablespace EWS_IDX_TS1
+        logging
+)
+pctfree 10
+initrans 1
+storage
+(
+    initial 64K
+    next 1024K
+    minextents 1
+    maxextents unlimited
+)
+tablespace EWS_DAT_TS1
+logging
+monitoring
+ noparallel;
+
+comment on table DM_EWS.EWS_INDEX_DEF is
+'风控预警指标的定义表 - 20140416';
+
+comment on column DM_EWS.EWS_INDEX_DEF.WARN_INDEX_NO is
+'指标编号';
+
+comment on column DM_EWS.EWS_INDEX_DEF.WARN_INDEX_NAME is
+'指标名称';
+
+comment on column DM_EWS.EWS_INDEX_DEF.WARN_SOURCE is
+'预警来源,如COD，营销';
+
+comment on column DM_EWS.EWS_INDEX_DEF.WARN_TYPE is
+'预警类别 事后 BEFORE，事中 DURING，事后 AFTER';
+
+comment on column DM_EWS.EWS_INDEX_DEF.WARN_PROPERTY is
+'预警性质: 预警 WARNING,错误 ERROR';
+
+comment on column DM_EWS.EWS_INDEX_DEF.WARN_CYCLE is
+'预警周期 DAY 天 WEEK 周';
+
+comment on column DM_EWS.EWS_INDEX_DEF.WARN_CYCLE_VAL is
+'预警周期值';
+
+comment on column DM_EWS.EWS_INDEX_DEF.WARN_RESULT_SOURCE is
+'A 预警自己定义 B Drools';
+
+comment on column DM_EWS.EWS_INDEX_DEF.WARN_LEVEL is
+'风险等级，L1,L2,L3';
+
+comment on column DM_EWS.EWS_INDEX_DEF.IS_VALID is
+'是否使用';
+
+comment on column DM_EWS.EWS_INDEX_DEF.IS_MAIL_NOTIFY is
+'是否邮件通知';
+
+comment on column DM_EWS.EWS_INDEX_DEF.IS_SMS_NOTIFY is
+'是否短信通知';
+
+comment on column DM_EWS.EWS_INDEX_DEF.REMARK is
+'备注';
+
+comment on column DM_EWS.EWS_INDEX_DEF.CREATE_ID is
+'创建人员';
+
+comment on column DM_EWS.EWS_INDEX_DEF.CREATE_TIME is
+'创建时间';
+
+comment on column DM_EWS.EWS_INDEX_DEF.UPDATE_ID is
+'更新人员';
+
+comment on column DM_EWS.EWS_INDEX_DEF.UPDATE_TIME is
+'更新时间';
+
+comment on column DM_EWS.EWS_INDEX_DEF.WARN_INDEX_SQL is
+'指标的SQL语句，只能包含一条SQL语句；
+可使用类MyBatis的参数占位符，如#{param1}和${param2}';
+
+comment on column DM_EWS.EWS_INDEX_DEF.WARN_INDEX_MAIL_TEMPLATE is
+'指标邮件模板中可以使用占位符，即#{param1}，其中的参数必须是【指标SQL】的结果集中所存在的。';
